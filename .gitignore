@@ -1,0 +1,13 @@
+server/
+.server/
+.PLUGINS_TEMP/
+*.log
+public/*.css
+public/*.js
+public/*.map
+public/js/dash.js
+node_modules/
+config.json
+settings.json
+.settings.json
+ex.py

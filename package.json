@@ -1,0 +1,37 @@
+{
+  "name": "granite",
+  "version": "1.0.0",
+  "description": "The best self-hosted and open source minecraft server management software",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node index.ts",
+    "setup": "npm install && npm install -g typescript ts-node sass",
+    "scss": "sass --watch public/dash.scss public/dash.css",
+    "frontend_ts": "tsc -w public/ts/dash.ts --outDir public/js",
+    "watchers": "node tools/FrontEndListeners.js",
+    "build": "npm run frontend_ts && npm run scss"
+  },
+  "keywords": [],
+  "author": "AnotherPillow",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/multer": "^1.4.7",
+    "@types/node": "^20.2.5",
+    "express": "^4.18.2"
+  },
+  "dependencies": {
+    "@types/archiver": "^5.3.2",
+    "@types/node-fetch": "^2.6.4",
+    "@types/properties-parser": "^0.3.0",
+    "@types/ws": "^8.5.5",
+    "archiver": "^5.3.1",
+    "body-parser": "^1.20.2",
+    "ejs": "^3.1.9",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "2.6",
+    "properties-parser": "^0.6.0",
+    "ws": "^8.13.0"
+  }
+}

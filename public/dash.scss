@@ -1,0 +1,874 @@
+$grey-1: rgba(255, 255, 255, 1); /* #FFFFFF */
+$grey-2: rgba(242, 242, 242, 1); /* #F2F2F2 */
+$grey-3: rgba(229, 229, 229, 1); /* #E5E5E5 */
+$grey-4: rgba(204, 204, 204, 1); /* #CCCCCC */
+$grey-5: rgba(179, 179, 179, 1); /* #B3B3B3 */
+$grey-6: rgba(153, 153, 153, 1); /* #999999 */
+$grey-7: rgba(128, 128, 128, 1); /* #808080 */
+$grey-8: rgba(102, 102, 102, 1); /* #666666 */
+$grey-9: rgba(77, 77, 77, 1); /* #4D4D4D */
+$grey-10: rgba(51, 51, 51, 1); /* #333333 */
+$grey-11: rgba(41, 41, 41, 1); /* #292929 */
+$grey-12: rgba(31, 31, 31, 1); /* #1F1F1F */
+$grey-13: rgba(26, 26, 26, 1); /* #1A1A1A */
+$grey-14: rgba(21, 21, 21, 1); /* #151515 */
+$grey-15: rgba(15, 15, 15, 1); /* #0F0F0F */
+$grey-16: rgba(10, 10, 10, 1); /* #0A0A0A */
+$grey-17: rgba(5, 5, 5, 1); /* #050505 */
+$grey-18: rgba(3, 3, 3, 1); /* #030303 */
+$grey-19: rgba(2, 2, 2, 1); /* #020202 */
+$grey-20: rgba(0, 0, 0, 1); /* #000000 */
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+//@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Source+Code+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Source+Code+Pro:wght@400;600&display=swap');
+
+@keyframes green_btn_fade {
+    0% {
+        background-color: $grey-10;
+    }
+    50% {
+        background-color: green;
+    }
+    100% {
+        background-color: $grey-10;
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+body {
+    font-family: 'Rubik', sans-serif;
+    background: $grey-12;
+    color: $grey-1;
+
+    // margin: 0;
+}
+
+.hide, .hidden, .hide::before, .hidden::before, .hide::after, .hidden::after {
+    display: none !important;
+}
+
+.better-button, #server-select {
+    border: none;
+    background-color: $grey-10;
+    color: $grey-1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $grey-11;
+    }
+
+    &:active {
+        background-color: $grey-12;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+select.better-button, #server-creation-modal-create {
+    background-color: $grey-11;
+}
+
+.better-input {
+    outline: none;
+    border: none;
+    background-color: $grey-10;
+    color: $grey-1;
+
+    &:focus {
+        outline: none;
+    }
+
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: 2px solid $grey-9;
+}
+
+#server-creation-modal {
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    background-color: $grey-10;
+    border-radius: 25px;
+    border: 10px solid $grey-11;
+
+    text-align: center;
+
+    #server-creation-modal-exit-cancel {
+        text-align: center;
+        //put it at the very bottom
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+
+        .better-button {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    .better-input {
+        width: 80%;
+        margin: 0 auto;
+        display: block;
+        margin-top: 10px;
+    }
+
+    #server-creation-vanilla-version-select, #server-creation-paper-version-select {
+        width: 200px;
+        
+    }
+    
+    #server-creation-vanilla-version-select, #server-creation-paper-version-select, #server-creation-software-select {
+        font-size: 1.3rem;
+    }
+
+    #server-creation-modal-port {
+        //target the + and - buttons on firefox
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    }
+
+}
+
+main {
+    $column-width: 300px;
+    $row-height: 100px;
+
+    display: grid;
+    grid-template-columns: $column-width 1fr;
+    grid-template-rows: $row-height 1fr;
+    grid-gap: 10px;
+    height: 100%; // Set the height to 100vh for full screen size
+    
+    .bar {
+        grid-column: 1 / 2;
+        grid-row: 1 / span 2;
+        background-color: $grey-10;
+        
+        .tabs {
+            padding-left:0;
+            text-align: center;
+
+            .tab {
+                font-size: 4rem;
+                border-radius: 50%;
+                
+                &:hover {
+                    cursor: pointer;
+
+                    rotate: 360deg;
+                    transition: rotate 1.2s ease-in-out;
+
+                }
+
+                
+
+            
+            }
+
+            list-style-type: none;
+
+        }
+
+        #server-bar-info {
+
+            &.grey::before {
+                background-color: $grey-10;
+            }
+
+            &.red::before {
+                background-color: rgb(173, 3, 3);
+            }
+
+            &.green::before {
+                background-color: green;
+            }
+
+            &.yellow::before {
+                background-color: rgb(214, 210, 2);
+            }
+
+            &::before {
+                border-radius: 5px;
+            }
+
+            i {
+                margin-right: 10px;
+                
+                
+                
+                // &.fa-toggle-on:not(.hide) {
+                //     //move 25px to the left, but don't move the text after it
+                //     transform: translateX(-15px);
+
+                // }
+                
+
+            }
+            
+            .starter {
+                
+                cursor: pointer;
+
+                &:hover {
+                    color: $grey-5;
+                    background-color: $grey-10;
+                }
+
+                
+
+                
+            }
+
+            // text-align: center;
+            
+
+            
+
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            width: 100%;
+            height: 100px;
+            
+            &::before {
+                width:20px;
+                height: 100px;
+                content: '';
+
+                
+                float: left;
+                position: absolute;
+                left: 15px;
+
+            }
+        }
+    }
+    
+    .top {
+        grid-column: 2 / span 2;
+        grid-row: 1 / 2;
+        background-color: $grey-10;
+
+        .logo {
+            float: right;
+    
+            // background-color: $grey-10;
+            // border-radius: 50%;
+    
+            
+            img {
+                width: 100px;
+                height: 100px;
+                
+            }
+        }
+
+        .server-dropdown {
+            float: left;
+
+            #new-server-btn {
+                background-color: $grey-11;
+
+                margin-left: 10px;
+            }
+
+            #server-select {
+                background-color: $grey-11;
+                height: 50px;
+
+                margin-top: 25px;
+                margin-left: 25px;
+
+            }
+
+        }
+    }
+    
+    .main {
+        grid-column: 2 / -1;
+        grid-row: 2 / 3;
+        background-color: $grey-12;
+        overflow: auto; // Enable vertical scrolling if content exceeds available   
+        
+
+        $con-font: 'Source Code Pro', monospace;
+        
+        [data-tab-name="server"] {
+            //make 5 rows, each row only has one child
+
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(5, 1fr);
+            grid-gap: 10px;
+
+
+            .server-page-content {
+                padding: 10px;
+                font-size: 1.5rem;
+            }
+            
+            
+            //the children are .server-info .server-starter .server-port .server-software and server-version, their content is .server-page.content
+            
+            .server-info {
+                grid-row: 1 / 2;
+                grid-column: 1 / 2;
+                background-color: $grey-10;
+                border-radius: 15px;
+
+                p {
+                    font-size: 2rem;
+                    text-align: center;
+                }
+            }
+
+            .server-starter {
+                grid-row: 2 / 3;
+                grid-column: 1 / 2;
+                background-color: $grey-10;
+                border-radius: 15px;
+
+                width: 50%;
+                margin: 0 auto;
+                
+                .server-page-content {
+                    padding:0;
+                    button {
+                        width: 100%;
+                        height: 100%;
+    
+                        border-radius: 15px;
+
+                        &:hover i {
+                            color: $grey-5;
+                            background-color: $grey-10;
+                        }
+
+                        i {
+                            //make the icon fill the button
+                            font-size: 8rem;
+
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+
+            .server-port {
+
+                grid-row: 3 / 4;
+                grid-column: 1 / 2;
+                background-color: $grey-10;
+                border-radius: 15px;
+
+                width: 50%;
+                margin-left: auto;
+            }
+
+            .server-software {
+                grid-row: 4 / 5;
+                grid-column: 1 / 2;
+                background-color: $grey-10;
+                border-radius: 15px;
+
+                width: 50%;
+                margin-left: auto;
+            }
+
+            .server-version {
+                grid-row: 5 / 6;
+                grid-column: 1 / 2;
+                background-color: $grey-10;
+                border-radius: 15px;
+
+                width: 50%;
+                margin-left: auto;
+            }
+
+             
+            
+
+        
+        }
+
+        [data-tab-name="console"] {
+            font-family: $con-font;
+            font-weight: 600;
+
+            $output-height: 80%; 
+            $input-height:  10%;
+
+            .console-output {
+                background-color: $grey-9;
+
+                border-radius: 15px;
+                margin-bottom: 10px;
+                
+                width:100%;
+                height:80%;
+
+                overflow: auto; // Enable vertical scrolling if content exceeds available
+                
+                p {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+
+            .console-input {
+                background-color: $grey-9;
+
+                border-radius: 15px;
+                margin-bottom: 10px;
+                
+                width:100%;
+                height:10%;
+
+                padding-left:50px;
+                color: $grey-1;
+
+                caret-color: $grey-1;
+                
+                font-family: $con-font;
+
+                border: none;
+
+                &:focus {
+                    outline: none;
+                }
+
+            }
+
+            .console-input-btn {
+                color: $grey-5;
+                font-family: $con-font;
+
+                position: absolute;
+                right: 100px;
+                margin-top: 15px;
+                
+                outline: none;
+                border: none;
+                background-color: transparent;
+                
+                cursor: pointer;
+                
+                i {
+                    font-size: 3rem;
+                }
+
+            }
+        }
+
+        [data-tab-name="plugins"] {
+            //target #plugin_dropzone WHEN a file is being dragged over it
+
+            #plugin_dropzone {
+                position: absolute;
+                right:0;
+                top: $row-height + 25px;
+
+                height: calc(99% - #{$row-height + 30px});
+                width: 200px;
+
+                border-radius: 15px;
+                border: 3px dashed $grey-5;
+
+                //target it when a file is being dragged over it
+                &:hover, &:active, &:focus, &.dragover {
+                    
+                    &::before {
+                        content: 'Drop plugins here to upload';
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+
+                        color: $grey-5;
+                        font-size: 1.5rem;
+
+                
+                    }
+                }
+            }
+
+            #plugin_list {
+                //why can't i minus px from vw?
+                width: calc(100% - #{$row-height + 100px});
+                margin-top: -15px;
+                height: 95%;
+                background-color: $grey-9;
+                border-radius: 15px;
+
+                overflow: auto; 
+
+                ul {
+                    list-style-type: none;
+
+                    padding: 0;
+                    padding-top: 15px;
+
+                    
+                }
+
+                li {
+                    /*
+                    HTML is
+                    <li class="plugin_li">
+                                <div class="plugin_li_name">
+                                    <p><%= plugin.name %></p>
+                                </div>
+                                <div class="plugin_li_enabled">
+                                    <label class="switch">
+                                        <input type="checkbox" class="plugin_li_enabled_checkbox" data-plugin-name="<%= plugin.name %>" <%= plugin.enabled ? 'checked' : '' %>>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="plugin_li_path">
+                                    <p><%= plugin.path %></p>
+                                </div>
+                                <div class="plugin_li_actions">
+                                    <button class="plugin_li_action_btn" data-plugin-name="<%= plugin.name %>">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                    */
+                    display: grid;
+                    grid-template-columns: 2fr 1fr 3fr 1fr;
+
+                    //top 12px padding, bottom 8px padding, left 25px padding, right 20px padding
+                    padding: 6px 20px 6px 25px;
+
+                    margin: 25px 25px 25px 25px;
+
+                    //height: 50px;
+                    
+
+                    background-color: $grey-10;
+                    border-radius: 15px;
+
+                    border: 3px solid $grey-5;
+
+                    .plugin_li_name {
+                        grid-column: 1 / 2;
+                        grid-row: 1 / 2;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        
+
+                        p {
+                            margin: 0;
+                            padding: 0;
+                            font-size: 1.5rem;
+                            color: $grey-1;
+
+                            word-break: break-all;
+                        }
+                    }
+
+                    .plugin_li_enabled {
+                        grid-column: 2 / 3;
+                        grid-row: 1 / 2;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+
+                        .switch {
+                            position: relative;
+                            display: inline-block;
+                            width: 60px;
+                            height: 34px;
+                        }
+                        
+                        .switch input { 
+                            opacity: 0;
+                            width: 0;
+                            height: 0;
+                        }
+                        
+                        .slider {
+                            position: absolute;
+                            cursor: pointer;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: 0;
+                            background-color: $grey-5;
+                            -webkit-transition: .4s;
+                            transition: .4s;
+                            border-radius: 34px;
+                        }
+                        
+                        .slider:before {
+                            position: absolute;
+                            content: "";
+                            height: 26px;
+                            width: 26px;
+                            left: 4px;
+                            bottom: 4px;
+                            background-color: white;
+                            -webkit-transition: .4s;
+                            transition: .4s;
+                            border-radius: 50%;
+                        }
+                        
+                        input:checked + .slider {
+                            background-color: $grey-11;
+                        }
+                        
+                        input:focus + .slider {
+                            box-shadow: 0 0 1px $grey-11;
+                        }
+                        
+                        input:checked + .slider:before {
+                            transform: translateX(26px);
+                        }
+                        
+                        /* Rounded sliders */
+                        .slider.round {
+                            border-radius: 34px;
+                        }
+                        
+                        .slider.round:before {
+                            border-radius: 50%;
+                        }
+                    }
+
+                    .plugin_li_path {
+                        grid-column: 3 / 4;
+                        grid-row: 1 / 2;
+
+                        font-family: $con-font;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        p {
+                            margin: 0;
+                            padding: 0;
+                            font-size: 1rem;
+                            color: $grey-1;
+                        }
+                    }
+
+                    .plugin_li_actions {
+                        grid-column: 4 / 4;
+                        grid-row: 1 / 2;
+
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .plugin_li_action_btn {
+                            color: $grey-5;
+                            font-family: $con-font;
+                            font-size: 1.5rem;
+
+                            // height: 100%;
+                            // width: 100%;
+
+                            outline: none;
+                            border: none;
+                            background-color: transparent;
+                            
+                            cursor: pointer;
+                            
+                            i {
+                                font-size: 1.5rem;
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        [data-tab-name="settings"] {
+            text-align: center;
+            
+            a {
+                color: $grey-8;
+                text-decoration: none;   
+            }
+
+            .save-props-btn {
+                //make it all the way to the right, this isn't part of a grid so it's not affected by the grid-template-columns
+                //justify-self: end; does not work
+                // position: absolute;
+                // right: 100px;
+                // top: $row-height + 50px;
+
+                float: right;
+                margin-top: -75px;
+                margin-right: 25px;
+                    
+            }
+
+            .restart-props-txt {
+                float:left;
+                margin-top: -75px;
+                margin-left: 25px;
+            }
+
+            .green_fade_btn {
+                //do @keyframe green_btn_fade
+                animation: green_btn_fade 1.8s;
+                
+
+            }
+
+            .server-settings-grid {
+
+                display: grid;
+                
+                //make a 3x4 grid
+                //each element in the horizontal space is 33%, and each height is 20%
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+                grid-gap: 25px;
+
+                height: 100%;
+
+                .server-settings-element {
+                    background-color: $grey-9;
+                    border-radius: 15px;
+                    padding: 10px;
+
+                    
+
+                    
+
+                    text-align: center;
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $grey-10;
+
+                        .server-setting-name {
+                            background-color: $grey-11;
+                        }
+                    }
+
+                    // .server-settings-element-icon {
+                    //     margin-bottom: 25px;
+                    //     font-size: 5rem;
+                    // }
+
+                    .server-setting-name {
+                        font-size: 2rem;
+
+                        //make a 'code' block
+                        font-family: $con-font;
+
+                        background-color: $grey-10;
+                        border-radius: 15px;
+                    }
+
+                    .server-setting-value {
+                        font-size: 1.5rem;
+                    }
+
+                    input {
+                        outline: none;
+                        //padding-left:15px;
+
+                        border: 1px solid $grey-12;
+                        border-radius: 15px;
+                        
+                        background-color: $grey-9;
+                        color: $grey-1;
+
+                        text-align: center;
+                        
+                    }
+                }
+
+            }
+        }
+
+        [data-tab-name="download"] {
+            text-align: center;
+            .download-options {
+                //make it have 3 adjacent columns
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-gap: 10px;
+
+                .download-option {
+                    background-color: $grey-9;
+                    border-radius: 15px;
+                    padding: 10px;
+
+                    text-align: center;
+
+                    
+
+                    &:hover {
+                        cursor: pointer;
+                        background-color: $grey-10;
+                    }
+
+                    .download-option-icon {
+                        margin-bottom: 25px;
+                        font-size: 5rem;
+                    }
+
+                    .download-option-text {
+                        font-size: 2rem;
+                    }
+                }
+            }
+        }
+
+        [data-tab-name="extensions"] {
+            text-align: center;
+            
+            #extensions-code-spin {
+                animation: spin 4s linear infinite;
+
+                font-size: 5rem;
+
+                //put it in the middle of the parent, not the middle of the screen
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                margin-left: $row-height
+                
+
+            }
+        }
+    }
+}

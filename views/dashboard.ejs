@@ -1,0 +1,269 @@
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/public/dash.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.4.0/css/all.css">
+    <script>
+        let __DATA = {
+            server_name: "<%= current_server_choice.server_name %>",
+            frontend_port: "<%= frontend_port %>",
+            ws_port: "<%= ws_port %>",
+            is_server_online: "<%= is_server_online %>" == "true",
+            server_software: "<%= current_server_choice.server_software %>",
+            mc_port: "<%= current_server_choice.port %>",
+            server_version: "<%= current_server_choice.version %>",
+            props: JSON.parse(`<%- props %>`),
+            plugins: JSON.parse(`<%- plugins %>`),
+            versions: JSON.parse(`<%- versions %>`),
+            
+            host: window.location.hostname,
+        };
+    </script>
+</head>
+<body>
+    
+    <main>
+        <div class="bar">
+            <div id="server-bar-info" class="<%= is_server_online ? 'green' : 'red' %>">
+                <!-- <i class="fa-solid fa-power-off"></i> -->
+                <div class="starter">
+                    <i class="fa-solid fa-toggle-off fa-2xl <%= is_server_online ? 'hide' : '' %>"></i>
+                    <i class="fa-solid fa-toggle-on fa-2xl <%= is_server_online ? '' : 'hide' %>"></i>
+                </div>
+                <h2><%= current_server_choice.server_name %></h2>
+            </div>
+            <ul class="tabs">
+                <li class="tab" data-tab-name="server">
+                    <i class="fa-solid fa-server"></i>
+                </li>
+                <li class="tab" data-tab-name="console">
+                    <i class="fa-solid fa-terminal"></i>
+                </li>
+                <li class="tab" data-tab-name="plugins">
+                    <i class="fa-solid fa-plug"></i>
+                </li>
+                <li class="tab" data-tab-name="settings">
+                    <i class="fa-solid fa-gear"></i>
+                </li>
+                <li class="tab" data-tab-name="download">
+                    <i class="fa-solid fa-cloud-arrow-down"></i>
+                </li>
+                <li class="tab" data-tab-name="extensions">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="top">
+            <div class="server-dropdown">
+                <select name="server_select" id="server-select" class="better-button">
+                    <% for (let server of servers) { %>
+                        <option value="<%= server.server_name %>" <%= server.server_name == current_server_choice.server_name ? 'selected' : '' %>><%= server.server_name %></option>
+                    <% } %>
+                </select>
+                <button class="better-button" id="new-server-btn">
+                    <i class="fa-solid fa-plus"></i>
+                    New Server
+                    
+                </button>
+            </div>
+            <div class="logo">
+                <img src="/assets/Polished.png" alt="logo">
+            </div>
+        </div>
+        <div class="main">
+            <div class="page" data-tab-name="server">
+                <div class="server-info server-page-child">
+                    <div class="server-page-content">
+                        <p><%= current_server_choice.server_name %></p>
+                        
+                    </div>
+                </div>
+                <!--
+                    <div class="server-starter">
+                    <div class="server-page-content">
+                        <button class="server-starter-btn better-button" id="info-starder-btn">
+                            <i class="fa-solid fa-toggle-off fa-2xl<%= is_server_online ? ' hide' : '' %>"></i>
+                            <i class="fa-solid fa-toggle-on fa-2xl<%= is_server_online ? '' : ' hide' %>"></i>
+                        </button>
+                        
+                    </div>
+
+                </div>
+                -->
+                <div class="server-port server-page-child">
+
+                    <div class="server-page-content">
+                        <p>Server port: <%= current_server_choice.port %></p>
+
+                    </div>
+                
+                </div>
+                <div class="server-software server-page-child">
+                    <div class="server-page-content">
+                        <p>Software: <%= current_server_choice.software %></p>
+                        
+                    </div>
+
+                </div>
+                <div class="server-version server-page-child">
+                    <div class="server-page-content">
+                        <p>Version: <%= current_server_choice.version %></p>
+                        
+                    </div>
+
+                </div>
+            </div>
+            <div class="page hide" data-tab-name="console">
+                <div class="console-output"></div>
+                
+                <input class="console-input">
+                <button class="console-input-btn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+                
+                
+            </div>
+            <div class="page hide" data-tab-name="plugins">
+                <div id="plugin_list">
+                    <ul id="plugin_ul">
+                        <% for (let plugin of JSON.parse(plugins)) { %>
+                            <li class="plugin_li" data-plugin-name="<%= plugin.name %>">
+                                <div class="plugin_li_name">
+                                    <p><%= plugin.name %></p>
+                                </div>
+                                <div class="plugin_li_enabled">
+                                    <label class="switch">
+                                        <input type="checkbox" class="plugin_li_enabled_checkbox" data-plugin-name="<%= plugin.name %>" <%= plugin.enabled ? 'checked' : '' %>>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <div class="plugin_li_path">
+                                    <p><%= plugin.path %></p>
+                                </div>
+                                <div class="plugin_li_actions">
+                                    <button class="plugin_li_action_btn" data-plugin-name="<%= plugin.name %>">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+                <div id="plugin_dropzone" dropzone></div>
+            </div>
+            <div class="page hide" data-tab-name="settings">
+                <h1>Properties</h1>
+                <h3>A full list can be found <a href="https://minecraft.fandom.com/wiki/Server.properties">here</a></h3>
+
+                <button class="save-props-btn better-button">Save</button>
+                <span class="restart-props-txt">To change properties<br/>the server must be turned off!</span>
+                <div class="server-settings-grid">
+                    <% for ([key, value] of Object.entries(JSON.parse(props))) { %>
+                        <div class="server-settings-element">
+                            <div class="server-setting-name">
+                                <p><%= key %></p>
+                            </div>
+                            <div class="server-setting-value">
+                                <input
+                                    type="text"
+                                    value="<%= value %>"
+                                    data-property-input-name="<%= key %>"
+                                    data-property-input-value="<%= value %>"
+                                >
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+            <div class="page hide" data-tab-name="download">
+                <h1>Downloads</h1>
+                <div class="download-options">
+                    <div data-option-id="1" class="download-option" data-option-dimensions="overworld">
+                        <i class="download-option-icon fa-solid fa-earth-americas"></i>
+                        <h3>Overworld</h3>
+                        <!-- <h2><a href="/server/download/overworld">Download</a></h2> -->
+                    </div>
+                    <div data-option-id="2" class="download-option" data-option-dimensions="nether">
+                        <i class="download-option-icon fa-solid fa-fire"></i>
+                        <h3>Nether</h3>
+                        <!-- <h2><a href="/server/download/nether">Download</a></h2> -->
+                    </div>  
+                    <div data-option-id="3" class="download-option" data-option-dimensions="end">
+                        <i class="download-option-icon fa-solid fa-eye"></i>
+                        <h3>End</h3>
+                        <!-- <h2><a href="/server/download/end">Download</a></h2> -->
+                    </div>
+                </div>
+            </div>
+            <div class="page hide" data-tab-name="extensions">
+                <h1>Extensions</h1>
+
+                <h2>Nothing here yet!</h3>
+                <h4>Extensions will be available soon!</h4>
+
+                <!-- <div id="extensions-code-spin">
+                    <i class="fa-solid fa-code"></i>
+                </div> -->
+                
+            </div>
+
+        </div>
+        
+        
+    </main>
+    
+    
+    <div id="server-creation-modal" style="top: 0; left: 0; display: none;">
+        <h3>Creating a new server</h3>
+
+        <input id="server-creation-modal-name" type="text" placeholder="Server name" class="better-input">
+        <br>
+        <select 
+            id="server-creation-software-select" 
+            name="server-creation-software-selection" 
+            class="better-button" 
+            onload="setTimeout(() => { elm.value = 'paper'; }, 200);">
+            <option value="paper">Paper</option>
+            <option value="vanilla">Vanilla</option>
+        </select>
+
+        <select
+            id="server-creation-paper-version-select"
+            name="server-creation-paper-version-selection" 
+            class="better-button">
+            <% for (let version of JSON.parse(versions).paper) { %>
+                <option value="<%= version %>"><%= version %></option>
+            <% } %>
+        </select>
+        <select 
+            id="server-creation-vanilla-version-select"
+            name="server-creation-vanilla-version-selection"
+            class="better-button"
+            style="display: none;">
+            <% for (let version of JSON.parse(versions).vanilla) { %>
+                <option value="<%= version %>"><%= version %></option>
+            <% } %>
+        </select>
+
+        <input type="text" id="server-creation-modal-port" placeholder="Port" class="better-input" value="25565">
+
+        <br>
+        <button id="server-creation-modal-create" class="better-button">Create</button>
+
+        <!-- <h1>
+            <b>
+                You must restart Granite for the server to work!
+            </b>
+        </h1> -->
+
+        <div id="server-creation-modal-exit-cancel">
+            <button id="server-creation-modal-exit" class="better-button">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>  
+
+            
+    </div>
+    <script src="/public/js/dash.js"></script>
+</body>
+</html>
