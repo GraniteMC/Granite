@@ -1,8 +1,8 @@
 
-<center>
+<p align="center">
     <image src="assets/Polished.png">
     <h1>Granite</h1>
-</center>
+</p>
 
 <br>
 
