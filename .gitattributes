@@ -2,4 +2,4 @@
 * text=auto
 
 
-*.ipynb linguist-vendored=false
+*.ipynb linguist-vendored
