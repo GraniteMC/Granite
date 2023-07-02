@@ -92,6 +92,8 @@ export class ServerProcess {
 
         this.proc.stderr.on('data', data => {
             if (!data?.toString()) return;
+
+            console.log("Line 96, Error:", data.toString().trim())
             
             
             // console.log(

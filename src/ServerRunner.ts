@@ -51,10 +51,6 @@ export class Server {
     }
     
     stop() {
-        this._stop();
-    }
-
-    _stop() {
         //console.log(this)
         if (!this.ServerProcessInstance) return;
         
@@ -64,13 +60,14 @@ export class Server {
     }
     
     restart() {
-        this._stop();
+        console.log(this)
+        this.stop();
         this.start();
     }
     start() {  
         if (this.ServerProcessInstance) return;
 
-        this.ServerProcessInstance = new ServerProcess(`./server/${this.Name}/${this.Software}-${this.Version}/${this.Software}-${this.Version}.jar`, this.stop, this.restart, (ci) => {
+        this.ServerProcessInstance = new ServerProcess(`./server/${this.Name}/${this.Software}-${this.Version}/${this.Software}-${this.Version}.jar`, this.stop, this.restart.bind(this), (ci) => {
             
             const { message, isError, type, code } = ci;
 
