@@ -60,7 +60,7 @@ export class Server {
     }
     
     restart() {
-        console.log(this)
+        // console.log(this)
         this.stop();
         this.start();
     }
