@@ -10,7 +10,7 @@
     "scss": "sass --watch public/dash.scss public/dash.css",
     "frontend_ts": "tsc -w public/ts/dash.ts --outDir public/js",
     "watchers": "node tools/FrontEndListeners.js",
-    "build": "npm run frontend_ts && npm run scss"
+    "build": "sass public/dash.scss public/dash.css && tsc public/ts/dash.ts --outDir public/js"
   },
   "keywords": [],
   "author": "AnotherPillow",
