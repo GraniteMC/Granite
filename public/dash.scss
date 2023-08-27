@@ -429,8 +429,16 @@ main {
                 border-radius: 15px;
                 margin-bottom: 10px;
                 
-                width:100%;
+                width: calc(100% - 20px);
                 height:80%;
+
+                padding: 10px;
+
+                scrollbar-width: none;
+
+                ::-webkit-scrollbar {
+                    display: none;
+                }
 
                 overflow: auto; // Enable vertical scrolling if content exceeds available
                 

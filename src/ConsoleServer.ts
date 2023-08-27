@@ -40,6 +40,7 @@ export class Console {
     }
 
     close() {
+        console.log('Closing console server');
         this.server?.close();
         // this.server = null;
         this.ws.close();
