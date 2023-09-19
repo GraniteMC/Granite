@@ -530,7 +530,7 @@ main {
             #plugin_list {
                 //why can't i minus px from vw?
                 width: calc(100% - #{$row-height + 100px});
-                margin-top: -15px;
+                // margin-top: -15px;
                 height: 95%;
                 background-color: $grey-9;
                 border-radius: 15px;

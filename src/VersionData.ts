@@ -32,7 +32,9 @@ export async function downloadVersion(version: string, software: 'paper' | 'vani
 }
 
 export function versionInstalled(version: string, software: 'paper' | 'vanilla', serverName: string): boolean {
+    if (!version) return false
     if (version.endsWith('.0')) version = version.slice(0, -2)
+
     return fs.existsSync(`./server/${serverName}/${software}-${version}/${software}-${version}.jar`)
 }
 

@@ -114,6 +114,8 @@ app.post('/server/plugin/upload', upload.single('file'), (req, res) => {
     // console.log(req.file, req.body, req.body.name);
     let b64 = req.file?.buffer.toString('base64') || ''
     plugins.addPlugin(req.body.name, b64);
+
+    res.sendStatus(200)
 });
 
 app.post('/server/plugin/delete/:name', (req, res) => {
