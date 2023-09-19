@@ -172,7 +172,8 @@ main {
             text-align: center;
 
             .tab {
-                font-size: 4rem;
+                font-size: 3.5rem;
+                line-height: 5rem;
                 border-radius: 50%;
                 
                 &:hover {
@@ -257,7 +258,7 @@ main {
             
             &::before {
                 width:20px;
-                height: 100px;
+                height: 75px;
                 content: '';
 
                 
@@ -282,8 +283,9 @@ main {
     
             
             img {
-                width: 100px;
-                height: 100px;
+                width: 75px;
+                height: 75px;
+                margin: 12.5px 12.5px 12.5px 0;
                 
             }
         }
