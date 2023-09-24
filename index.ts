@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 //if (!fs.existsSync('./.PLUGINS_TEMP')) fs.mkdirSync('./.PLUGINS_TEMP');
 if (!fs.existsSync('./server')) fs.mkdirSync('./server');
 
-let server: Server = new Server('1.19', 'paper', 'myepicserver');
+let server: Server = new Server('1.19', 'paper', 'Granite');
 let plugins: PluginManager = new PluginManager(server);
 var storage = multer.memoryStorage()
 var upload = multer({ storage: storage })
