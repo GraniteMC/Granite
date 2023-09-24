@@ -29,7 +29,7 @@ Granite is an open-source minecraft server manager designed to be selfhostable a
     - [npm](https://www.npmjs.com/)
     - [Git](https://git-scm.com/)
 3. Clone the repository using `git clone https://github.com/GraniteMC/Granite.git`
-4. Install the dependencies and compile frontend using `npm setup && npm run build`
+4. Install the dependencies and compile frontend using `npm run setup && npm run build`
 
 ## Running Granite
 
