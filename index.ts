@@ -16,7 +16,6 @@ app.use('/public',express.static('public'));
 app.use('/assets',express.static('assets'));
 app.use(bodyParser.json());
 
-//if (!fs.existsSync('./.PLUGINS_TEMP')) fs.mkdirSync('./.PLUGINS_TEMP');
 if (!fs.existsSync('./server')) fs.mkdirSync('./server');
 
 let server: Server = new Server('1.19', 'paper', 'Granite');
