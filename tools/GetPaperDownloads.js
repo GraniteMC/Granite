@@ -34,9 +34,9 @@ setInterval(_=>{
 
 	setTimeout(()=>{
 		if (exit) return;
-    let el = document.querySelector(".SoftwareBuildsTable_body__0QhzK>tr>td>div>div>a")
-    console.log(el.href)
-     arr.push(el.href)
-    i++
+        let el = document.querySelector('[class^="SoftwareBuildsTable_body"]>tr>td>div>div>a')
+        console.log(el.href)
+        arr.push(el.href)
+        i++
 	}, 50)
 }, 200)
