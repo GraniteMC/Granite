@@ -69,6 +69,10 @@ const changeServer = (name: string) => {
 
 app.set('view engine', 'ejs');
 
+app.get('/', (req, res) => {
+    res.redirect(301, '/dashboard')
+})
+
 app.get('/dashboard', (req, res) => {
     let data = {
         ...cfg.Config,
