@@ -3,7 +3,7 @@
 - This script will get all the paper downloads from the website and print them to the console
 - Run it via the console on "https://papermc.io/downloads/all" and it will print all the links to the console
 - You may have to run it twice, as the website loads the text in the first time.
-
+- Once done, run logDictionary()
 */
 
 var arr = []
@@ -12,6 +12,8 @@ var children = Array.from(document.querySelector("nav.p-2").children);
 var i = 0;
 var max = children.length + 1;
 var logged = false;
+
+var extract_version_from_url = /https\:\/\/api\.papermc\.io\/v2\/projects\/paper\/versions\/(1\.\d+\.?\d?(?:-pre7)?)\/builds\/\d+\/downloads\/.+\.jar/
 
 setInterval(_=>{
 
@@ -29,7 +31,7 @@ setInterval(_=>{
 		}
 		return;
 	}
-	if (i > max || !x) return;
+	if (i > max || !x) return
 	x.click();
 
 	setTimeout(()=>{
@@ -40,3 +42,12 @@ setInterval(_=>{
         i++
 	}, 50)
 }, 200)
+
+
+function logDictionary() {
+    var downloads_dict = {}
+    for (const link of arr) {
+        downloads_dict[`paper-${link.match(extract_version_from_url)[1]}`] = link
+    }
+    console.log(JSON.stringify(downloads_dict))
+}
