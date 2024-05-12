@@ -28,11 +28,6 @@ export class Server {
 
         this.JarFolder = `./server/${this.Name}/${this.Software}-${this.Version}`;
         
-        
-        this.ConsoleServerInstance = new wscs.Console((data: string) => {
-            let message = data.startsWith('/') ? data.slice(1) : data;
-            this.ServerProcessInstance?.input(message + '\n');
-        })
 
         this.Ready = new Promise((resolve, reject) => {
             const interval = setInterval(() => {
@@ -65,8 +60,14 @@ export class Server {
         this.start();
     }
     start() {  
+        console.log(`Start requested for ${this.Name} (${this.Software} ${this.Version})`)
         if (this.ServerProcessInstance) return;
-
+        
+        this.ConsoleServerInstance = new wscs.Console((data: string) => {
+            let message = data.startsWith('/') ? data.slice(1) : data;
+            this.ServerProcessInstance?.input(message + '\n');
+        })
+        
         this.ServerProcessInstance = new ServerProcess(`./server/${this.Name}/${this.Software}-${this.Version}/${this.Software}-${this.Version}.jar`, this.stop, this.restart.bind(this), (ci) => {
             
             const { message, isError, type, code } = ci;
@@ -76,9 +77,9 @@ export class Server {
                 
             
 
-            //console.log(message + " | " + isError + " | " + type + " | " + code);
+            console.log(message + " | " + isError + " | " + type + " | " + code);
             console.log(message);
-            if (message === 'Server stopped.') {
+            if (message.endsWith('Server stopped.')) {
                 try {
                     this.stop();
                 } catch (error) {

@@ -75,7 +75,8 @@ app.get('/', (req, res) => {
 
 app.get('/dashboard', (req, res) => {
     let data = {
-        ...cfg.Config,
+        ws_port: cfg.getSocketPort(),
+        ...cfg.getConfig(),
         props: JSON.stringify(props),
         plugins: plugins.getString(),
         servers: cfg.Config.servers,

@@ -24,6 +24,7 @@ export class ServerProcess {
     private eulaTestRegex = /\[(\d{2}:\d{2}:\d{2}) INFO\]: You need to agree to the EULA in order to run the server\. Go to eula.txt for more info\./
 
     stop() {
+        console.log(`Stop requested for server proress ${this.jarPath}`)
         this.proc.stdin.write('stop\n');
         // this.callback({
         //     message: 'Server stopped.',
@@ -51,7 +52,7 @@ export class ServerProcess {
         this.proc.on('exit', () => {
             this.proc.kill();
             this.callback({
-                message: 'Server stopped.',
+                message: '+Server stopped.',
                 isError: false,
                 type: 'stop',
                 code: '1'

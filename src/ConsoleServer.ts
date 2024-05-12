@@ -8,8 +8,8 @@ export class Console {
     public ws: any;
 
     constructor(inputcb: (data: string) => void) {
-        this.server = new wss.WebSocketServer({ port: cfg.ws_port });
-        console.log('Console server started on port ' + cfg.ws_port);
+        this.server = new wss.WebSocketServer({ port: cfg.getSocketPort() });
+        console.log('Console server started on port ' + cfg.getSocketPort());
         this.server.on('connection', (ws) => {
 
             this.ws = ws;
@@ -33,17 +33,18 @@ export class Console {
 
     postMessage(message: string) {
         try {
-            this.ws.send(message);
+            this.ws?.send(message);
         } catch (error) {
             console.log("Failed to send message to client: " + error);
         }
     }
 
     close() {
+        this.postMessage('Granite Server stopped.')
         console.log('Closing console server');
         this.server?.close();
         // this.server = null;
-        this.ws.close();
+        this.ws?.close();
     }
 
 }

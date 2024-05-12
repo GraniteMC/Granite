@@ -78,10 +78,54 @@ let _DATA: _data_type = __DATA;
 
 let serverOn = _DATA.is_server_online;
 
+const initialiseConsoleWebSocket = () => {
+    const ConsoleWebsocket = new WebSocket(`ws://${_DATA.host}:${_DATA.ws_port}/console`);
+
+    const consoleInput = document.querySelector('.console-input') as HTMLInputElement;
+    const sendConsoleCommandBtn = document.querySelector('.console-input-btn');
+    const consoleOutput = document.querySelector('.console-output') as HTMLDivElement;
+
+    const sendConsoleInput = () => {
+        ConsoleWebsocket.send(consoleInput.value);
+        consoleInput.value = '';
+    }
+
+    const sendConsoleCommand = (ev) => {
+        if (ev.key === 'Enter') {
+            sendConsoleInput();
+        }
+    }
+
+    ConsoleWebsocket.addEventListener('message', (ev) => {
+        let newEl = document.createElement('p');
+        newEl.innerText = ev.data;
+        consoleOutput.appendChild(newEl);
+        consoleOutput.scrollTop = consoleOutput.scrollHeight;
+
+        if (ev.data =='Granite Server stopped.' || ev.data == '+Server stopped.') {
+            document.querySelector(".fa-solid.fa-toggle-on")?.classList.add('hide');
+            document.querySelector(".fa-solid.fa-toggle-off")?.classList.remove('hide');
+            document.querySelector('#server-bar-info')?.classList.toggle('green');
+            document.querySelector('#server-bar-info')?.classList.toggle('red');
+        }
+    });
+
+
+    consoleInput.addEventListener('keydown', sendConsoleCommand);
+    sendConsoleCommandBtn?.addEventListener('click', sendConsoleInput);
+
+    return () => {
+        ConsoleWebsocket.close()
+    }
+}
+
+let _closews = initialiseConsoleWebSocket()
+
 const toggleOnOff = (ev) => {
 
     if (serverOn) {
         stopServer(ev);
+        _closews()
         //swap .server-switch.hide to .server-switch.show and vice versa
         /*document.querySelectorAll('.starter i').forEach(el => {
             if (el.classList.contains('hide')) el.classList.remove('hide');
@@ -95,6 +139,7 @@ const toggleOnOff = (ev) => {
         });*/
         serverOn = true;
         startServer(ev);
+        _closews = initialiseConsoleWebSocket()
 
     }
 
@@ -105,35 +150,6 @@ const toggleOnOff = (ev) => {
 
 starterBtn1?.addEventListener('click', toggleOnOff);
 starterBtn2?.addEventListener('click', toggleOnOff);
-
-const ConsoleWebsocket = new WebSocket(`ws://${_DATA.host}:${_DATA.ws_port}/console`);
-
-const consoleInput = document.querySelector('.console-input') as HTMLInputElement;
-const sendConsoleCommandBtn = document.querySelector('.console-input-btn');
-const consoleOutput = document.querySelector('.console-output') as HTMLDivElement;
-
-const sendConsoleInput = () => {
-    ConsoleWebsocket.send(consoleInput.value);
-    consoleInput.value = '';
-}
-
-const sendConsoleCommand = (ev) => {
-    if (ev.key === 'Enter') {
-        sendConsoleInput();
-    }
-}
-
-ConsoleWebsocket.addEventListener('message', (ev) => {
-    let newEl = document.createElement('p');
-    newEl.innerText = ev.data;
-    consoleOutput.appendChild(newEl);
-    consoleOutput.scrollTop = consoleOutput.scrollHeight;
-});
-
-
-consoleInput.addEventListener('keydown', sendConsoleCommand);
-sendConsoleCommandBtn?.addEventListener('click', sendConsoleInput);
-
 
 const tabSwapper = (ev) => {
     console.log(ev);

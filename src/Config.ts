@@ -51,6 +51,17 @@ export let {
     ws_port,
 } = Config;
 
+export function getSocketPort() {
+    return Config.ws_port
+}
+
+export function getConfig() {
+    let o = structuredClone(Config)
+    //@ts-ignore
+    delete o.ws_port
+    return o as any
+}
+
 export function plusWSport() {
     Config.ws_port++;
     ws_port = Config.ws_port;
