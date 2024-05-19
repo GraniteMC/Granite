@@ -19,7 +19,7 @@ setInterval(_=>{
 
 	let x = children[i]
 
-	if (x.innerHTML === 'Waterfall' || x.innerHTML === 'Velocity') exit = true
+	if (!x || x.innerHTML === 'Waterfall' || x.innerHTML === 'Velocity') exit = true
 
 //console.log(x.innerHTML)
 
@@ -32,7 +32,7 @@ setInterval(_=>{
 		return;
 	}
 	if (i > max || !x) return
-	x.click();
+	x?.click();
 
 	setTimeout(()=>{
 		if (exit) return;
@@ -47,6 +47,8 @@ setInterval(_=>{
 function logDictionary() {
     var downloads_dict = {}
     for (const link of arr) {
+        if (!link.includes('projects/paper')) continue
+        console.log(link, typeof link, link.toString(), link.includes('products/paper'))
         downloads_dict[`paper-${link.match(extract_version_from_url)[1]}`] = link
     }
     console.log(JSON.stringify(downloads_dict))
