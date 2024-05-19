@@ -653,7 +653,7 @@ main {
                         }
                         
                         input:checked + .slider {
-                            background-color: $grey-11;
+                            background-color: rgb(0, 70, 0);
                         }
                         
                         input:focus + .slider {
