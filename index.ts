@@ -189,7 +189,9 @@ app.get('/server/download/:dimension', (req, res) => {
     let name = `world${dimension === 'overworld' ? '' : '_' + dimension}`;
     if (name === 'world_end') name = 'world_the_end';
 
-    console.log(`Downloading ${name}...`);
+    if (dimension === 'full-server') name = '' // download the full server directory, instead of a subdirectory
+
+    console.log(`Downloading ${name} (${dimension})...`);
 
     server.downloadWorld(name).then((path) => {
         console.log(`Downloaded ${name} to ${path}`);

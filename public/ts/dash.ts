@@ -176,8 +176,6 @@ document.querySelectorAll(`.download-option[data-option-dimensions]`).forEach(el
     el.addEventListener('click', (ev) => {
         //download /server/download/${el.getAttribute('data-option-dimensions')} (which is a GET, maybe open it in a new tab?)
         window.open(`/server/download/${el.getAttribute('data-option-dimensions')}`, '_blank');
-        
-
     });
 });
 

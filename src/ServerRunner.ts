@@ -103,6 +103,7 @@ export class Server {
     }
 
     async downloadWorld(name: string): Promise<string> {
-        return await zp.zipFolder(`./server/${this.Name}/${this.Software}-${this.Version}/${name}`, `./server/${this.Name}/${this.Software}-${this.Version}/${name}.zip`);
+        const fileName = name || 'full-server'
+        return await zp.zipFolder(`./server/${this.Name}/${this.Software}-${this.Version}/${name}`, `./server/${this.Name}/${this.Software}-${this.Version}_${fileName}.zip`);
     }
 }
