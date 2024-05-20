@@ -72,7 +72,7 @@ export class Server {
             
             const { message, isError, type, code } = ci;
 
-            if (!this.HasOutputted && /\[.+\]: Starting Minecraft server on \*:25565/.test(message))
+            if (!this.HasOutputted && /\[.+\]: Starting Minecraft server on \*:\d+/.test(message))
                 this.HasOutputted = true;
                 
             
