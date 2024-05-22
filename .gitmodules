@@ -1,0 +1,3 @@
+[submodule "src/strftime"]
+	path = src/strftime
+	url = https://github.com/GoldenProxy/strftime

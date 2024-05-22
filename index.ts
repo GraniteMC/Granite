@@ -2,6 +2,7 @@ import { ServerProcess } from './src/ServerProcess';
 import * as versions from './src/VersionData';
 import * as cfg from './src/Config';
 import * as ph from './src/PropertiesHandler';
+import * as bck from './src/Backups'
 import { PluginManager, Plugin as PluginType } from './src/PluginManager';
 import { Server } from './src/ServerRunner';
 import * as fs from 'fs';
@@ -9,6 +10,7 @@ import * as fs from 'fs';
 import express from 'express';
 import bodyParser from 'body-parser';
 import multer from 'multer';
+import path from 'node:path'
 
 const app: express.Application = express();
 
@@ -201,6 +203,16 @@ app.get('/server/download/:dimension', (req, res) => {
 
 
 app.post('/server/start', (req, res) => {
+    if (bck.eligible(cfg.Config)) {
+        bck.backup({
+            serverDetails: {
+                name: server.Name,
+                version: `${server.Software}-${server.Version}`,
+            },
+            destfolder: path.join(__dirname, cfg.Config.backups.location, `${server.Name} ${server.Software}-${server.Version}`)
+        })
+        cfg.updateBackupTime()
+    }
     server.start();
     res.sendStatus(200);
 });

@@ -12,6 +12,13 @@ export type properConfig = {
     ws_port: number,
     current_server_choice?: current_server_choiceType,
     servers: current_server_choiceType[]
+    backups: {
+        interval: number,
+        items: string[],
+        zip: boolean,
+        lastBackup: number,
+        location: string,
+    }
 }
 
 export const settings_name = 'settings.json';
@@ -38,6 +45,15 @@ try {
                 version: '1.19.4',
                 software: 'vanilla',
                 port: 25565,
+            },
+            backups: {
+                interval: 24 * 60 * 60 * 1000, // 24 hours, in milliseconds. if -1 it'll be each launch
+                items: [ 
+                    "plugins", "logs", "world", "world_nether", "world_the_end", "ops.json", "version_history.json", "bukkit.yml", "server.properties", "spigot.yml"
+                ],
+                zip: true,
+                lastBackup: 0,
+                location: 'backups/'
             }
         };
         fs.writeFileSync(settings_name, JSON.stringify(Config, null, 4));
@@ -72,6 +88,11 @@ export function updateConfig(data: properConfig) {
     Config = data;
     // config = Config;
     fs.writeFileSync(settings_name, JSON.stringify(Config, null, 4));
+}
+
+export function updateBackupTime() {
+    Config.backups.lastBackup = new Date().valueOf()
+    updateConfig(Config)
 }
 
 export function addNewServer(server: current_server_choiceType) {

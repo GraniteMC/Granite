@@ -45,3 +45,11 @@ Granite is an open-source minecraft server manager designed to be selfhostable a
     - You can turn the server on/off by clicking on the Power icon on the top left side of the screen.
 3. You can stop the server by pressing `Ctrl + C` in the terminal.
 4. If you want to change the default `4444` port, you can do so by changing the `frontend_port` field in `config.json` to the port you want to use. (Make sure the server is stopped before doing this)
+
+## Backups
+
+Automatic backups can be configured in `settings.json`, under the `backups` field.
+
+- `interval` the amount of milliseconds that if larger than time since last start, a backup will be made. This can be set to `-1` to *always* backup on server start.
+- `items` the folders to back up within a server.
+- `zip`, whether to zip the backup and delete the copied folder, or to keep the copied folder and remove the zip.

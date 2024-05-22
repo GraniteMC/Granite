@@ -11,3 +11,4 @@ config.json
 settings.json
 .settings.json
 ex.py
+backups/
