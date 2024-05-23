@@ -20,7 +20,9 @@ app.use(bodyParser.json());
 
 if (!fs.existsSync('./server')) fs.mkdirSync('./server');
 
-let server: Server = new Server('1.19', 'paper', 'Granite');
+let server: Server = new Server(versions.getNumericalVersionFromSoftVersion(cfg.current_server_choice!.version),
+    cfg.current_server_choice!.software ?? 'paper', 
+    cfg.current_server_choice!.server_name ?? 'Granite');
 let plugins: PluginManager = new PluginManager(server);
 var storage = multer.memoryStorage()
 var upload = multer({ storage: storage })

@@ -42,3 +42,8 @@ export let Versions = {
     vanilla: Object.keys(vanilla),
     paper: Object.keys(paper)
 }
+
+export function getNumericalVersionFromSoftVersion(ver: string) {
+    if (!ver) return '1.19'
+    return ver.includes('-') ? ver.split('-')[1] : ver
+}

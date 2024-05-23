@@ -29,12 +29,13 @@ export const backup: backupFunction = ({
         for (const item of items) {
             const ip = path.join('server', serverDetails.name, serverDetails.version, item)
             const dp = path.join(uniqueFolder, item)
+            const ipExists = fs.existsSync(ip)
             
-            if (!fs.existsSync(dp) && fs.statSync(ip).isDirectory()) 
+            if (!fs.existsSync(dp) && (ipExists && fs.statSync(ip).isDirectory())) 
                 fs.mkdirSync(dp, { recursive: true })
             
-
-            fs.cpSync(ip, dp, { recursive: true})
+            if (ipExists)
+                fs.cpSync(ip, dp, { recursive: true})
         }
 
         if (zip) {
