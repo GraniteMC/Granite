@@ -21,7 +21,7 @@ export const backup: backupFunction = ({
     if (!serverDetails || items.length == 0 || !destfolder) return false
 
     try {
-        const stamp = strftime('%Y-%m-%d %X %Zs', new Date()).replace(/:/g, ';') //eg. 2022-04-01 5;15;00 PM PST
+        const stamp = strftime('%F %X %Zs', new Date()).replace(/:/g, ';') //eg. 2022-04-01 5;15;00 PM PST
         const uniqueFolder = path.join(destfolder, stamp)
 
         fs.mkdirSync(uniqueFolder, { recursive: true })
