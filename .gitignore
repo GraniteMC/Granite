@@ -12,3 +12,4 @@ settings.json
 .settings.json
 ex.py
 backups/
+logs/

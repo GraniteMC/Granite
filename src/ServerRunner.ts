@@ -2,6 +2,7 @@ import * as vd from "./VersionData";
 import * as wscs from "./ConsoleServer";
 import * as zp from "./Zipper";
 import { ServerProcess } from "./ServerProcess";
+import Logger from "./Logger";
 
 export class Server {
     Version: string;
@@ -94,6 +95,7 @@ export class Server {
             }
                 
             this.ConsoleServerInstance?.postMessage(message);
+            Logger.chat(message)
 
             // if (message.includes('echo')) {
             //     this.ServerProcessInstance?.input('say help\n');
@@ -102,8 +104,13 @@ export class Server {
         });
     }
 
-    async downloadWorld(name: string): Promise<string> {
+    async downloadWorld(name: string): Promise<string | null> {
         const fileName = name || 'full-server'
-        return await zp.zipFolder(`./server/${this.Name}/${this.Software}-${this.Version}/${name}`, `./server/${this.Name}/${this.Software}-${this.Version}_${fileName}.zip`);
+        try {
+            return await zp.zipFolder(`./server/${this.Name}/${this.Software}-${this.Version}/${name}`, `./server/${this.Name}/${this.Software}-${this.Version}_${fileName}.zip`);
+        } catch (e) {
+            console.log('failed to download ' + name)
+            return null
+        }
     }
 }

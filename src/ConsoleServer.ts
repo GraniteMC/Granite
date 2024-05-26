@@ -1,5 +1,6 @@
 import wss from 'ws';
 import * as cfg from './Config';
+import Logger from './Logger';
 
 
 export class Console {
@@ -10,11 +11,12 @@ export class Console {
     constructor(inputcb: (data: string) => void) {
         this.server = new wss.WebSocketServer({ port: cfg.getSocketPort() });
         console.log('Console server started on port ' + cfg.getSocketPort());
-        this.server.on('connection', (ws) => {
+        this.server.on('connection', (ws, req) => {
 
             this.ws = ws;
 
             ws.on('message', (message: string) => {
+                Logger.ipAddressed((ws as any)._socket?.remoteAddress || (ws as any)._socket?.address?.().address || req.headers['x-forwarded-for'] || req.socket.remoteAddress, `**WS** received ${message}`)
                 console.log('received: %s', message);
                 inputcb(message.toString());
             });
