@@ -252,6 +252,6 @@ app.get('/favicon.ico', (req, res) => {
 });
 
 
-app.listen(cfg.frontend_port, () => {
+app.listen(cfg.frontend_port, '0.0.0.0', () => {
     console.log('Granite started on port ' + cfg.frontend_port);
 });
