@@ -3,6 +3,7 @@ import * as wscs from "./ConsoleServer";
 import * as zp from "./Zipper";
 import { ServerProcess } from "./ServerProcess";
 import Logger from "./Logger";
+import { updateIpAddressForServer } from "./Util";
 
 export class Server {
     Version: string;
@@ -62,6 +63,8 @@ export class Server {
     }
     start() {  
         console.log(`Start requested for ${this.Name} (${this.Software} ${this.Version})`)
+        updateIpAddressForServer(this.JarFolder + '/server.properties')
+        
         if (this.ServerProcessInstance) return;
         
         this.ConsoleServerInstance = new wscs.Console((data: string) => {

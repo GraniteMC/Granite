@@ -24,3 +24,9 @@ export function twentyFourHourTimestamp(date: Date = new Date()) {
 export function sha256(data: string) {
     return createHash('sha256').update(data).digest('base64');
 }
+export function updateIpAddressForServer(propPath: string) {
+    const older = fs.readFileSync(propPath).toString()
+    const newer = older.replace(/server\-ip\=\s/, 'server-ip=0.0.0.0\n')
+    
+    fs.writeFileSync(propPath, newer)
+}
