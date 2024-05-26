@@ -25,6 +25,7 @@ export function sha256(data: string) {
     return createHash('sha256').update(data).digest('base64');
 }
 export function updateIpAddressForServer(propPath: string) {
+    if (!fs.existsSync(propPath)) return;
     const older = fs.readFileSync(propPath).toString()
     const newer = older.replace(/server\-ip\=\s/, 'server-ip=0.0.0.0\n')
     
